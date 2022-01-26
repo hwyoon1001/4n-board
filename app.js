@@ -77,7 +77,7 @@ function upload_to_db(img_location) {
     }
     console.log(Item);
  
-    const URL = "본인 API GATEWAY 엔드포인트";
+    const URL = "https://b5um800ra9.execute-api.ap-northeast-2.amazonaws.com/default";
  
     fetch(URL, {
         method: "POST",
