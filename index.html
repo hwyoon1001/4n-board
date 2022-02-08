@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Article_Add</title>
+    <style>
+    </style>
+      <!--켜지면 get() 함수를 실행함.  -->
+      <body onLoad="get()">
+          <div id="name">
+      
+          </div>
+    
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.283.1.min.js"></script>
+    
+    
+    <script>
+      /* HTML노드 추가 함수 */
+      function createNode(element){
+          return document.createElement(element);
+      }
+      /* HTML노드에 자녀 추가 함수 */
+      function append(parent, el){
+          return parent.appendChild(el);
+      }
+      /* CSS 속성 추가 함수 */
+      function addStyle(styles) { 
+        
+        /* Create style element */ 
+        var css = document.createElement('style'); 
+        css.type = 'text/css'; 
+    
+        if (css.styleSheet)  
+            css.styleSheet.cssText += styles; 
+        else  
+            css.appendChild(document.createTextNode(styles)); 
+          
+        /* Append style to the head element */ 
+        document.getElementsByTagName("head")[0].appendChild(css); 
+    }
+    var elem = document.getElementById('name');
+      /* API 게이트웨이로 매물리스트 정보 가져오는 함수 */ 
+      const URL = "https://l9biqyi3wk.execute-api.ap-northeast-2.amazonaws.com/stage/board";
+      function get(){
+          fetch(URL, {
+              method: "GET",
+              headers: {
+                  'Accept': 'application/json',
+                  "Access-Control-Allow-Origin" : "*",
+              }
+          }).then(resp => resp.json())
+          .then(function(data){
+              let article_arr = data.Items;
+              console.log(data.Items);
+              return article_arr && article_arr.map(function(article_indiv){
+                  let li = createNode('li');
+                  let img = createNode('img');
+                  let span = createNode('span');
+                  
+                  // console.log(article_indiv.img_source);
+                  img.src = article_indiv.img_source;
+                  span.innerHTML = article_indiv.name +" - " + article_indiv.date +" - " + article_indiv.title +" - " + article_indiv.description;
+    
+                  append(li,img);
+                  append(li,span);
+                  append(elem,li);
+    
+                  var styles = 'div#articles > li > img { width:200px; height:100px }';
+                  addStyle(styles);
+    
+              })
+          })
+          .catch(err => console.log(err))
+      }
+      
+      function submitToAPI(e){
+          e.preventDefault();
+          add_article_with_photo('images');
+       }
+    </script>
+    <script src="./app.js"></script>
+
+    </head>
+ 
+    <body>
+        <div class="Top">
+  
+        </div>
+        <div style="text-align: center;"><h1>글 등록 페이지</h1></div>
+ 
+        <form name="article_add_form" method="POST">
+            <table width="940" style="padding:5px 0 5px 0; ">
+               <tr height="2"><td colspan="2"></td></tr>
+               <tr>
+                  <th>Id</th>
+                  <td><input type="text" id="Name" required></td>
+               </tr>
+               <tr>
+                  <th>date</th>
+                  <td><input type="text" id="date" required></td>
+               </tr>
+
+                    <th>EEG</th>
+                    <td><input type="file" id="article_image" name="filename"></td>
+                  </tr>
+                    <tr>
+                      <td colspan="3" style="text-align: center;">
+                        <button type="button" onclick="submitToAPI(event)"> 등록 </button>
+                        <input type="reset" value="취소">
+                     </td>
+                    </table>
+                   </form>
+ 
+        </div>
+ 
+    </body>
+ 
+    <head>
+ 
+    </head>
+ 
+</html>
+ 
