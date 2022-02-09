@@ -20,7 +20,6 @@ function upload_to_db(img_location) {
     var article_id = document.querySelector("#Name").value;
     var date = document.querySelector("#date").value;
     var title = document.querySelector("#title").value;
-    var description = document.querySelector("#description").value;
  
     var Item = {
         'article_id': article_id,
