@@ -24,8 +24,7 @@ function upload_to_db(img_location) {
     var Item = {
         'article_id': article_id,
         'date': date,
-        'title': title,
-        'description': description,
+        'title': title
         'img_source': img_location,
     }
     console.log(Item);
