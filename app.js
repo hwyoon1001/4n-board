@@ -36,7 +36,8 @@ function upload_to_db(img_location) {
     fetch(URL, {
         method: "POST",
         headers: {
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'Access-Control-Allow-Origin' : '*',
         },
         body: JSON.stringify({
             "TableName": "board-test",
